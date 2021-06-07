@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2021-06-07 11:24:20">
+<sys_ui_action action="INSERT_OR_UPDATE">
+<action_name>create_update_set</action_name>
+<active>true</active>
+<client>false</client>
+<client_script_v2><![CDATA[function onClick(g_form) {
+
+}]]></client_script_v2>
+<comments/>
+<condition/>
+<form_action>true</form_action>
+<form_button>true</form_button>
+<form_button_v2>false</form_button_v2>
+<form_context_menu>false</form_context_menu>
+<form_link>true</form_link>
+<form_menu_button_v2>false</form_menu_button_v2>
+<form_style>primary</form_style>
+<hint/>
+<isolate_script>false</isolate_script>
+<list_action>false</list_action>
+<list_banner_button>false</list_banner_button>
+<list_button>false</list_button>
+<list_choice>false</list_choice>
+<list_context_menu>false</list_context_menu>
+<list_link>false</list_link>
+<list_save_with_form_button>false</list_save_with_form_button>
+<list_style>primary</list_style>
+<messages/>
+<name>Create Update Set</name>
+<onclick/>
+<order>500</order>
+<script><![CDATA[var TABLENAME = 'sys_update_set';
+var updateSetCount = checkExistingUpdateSet();
+var ID;
+
+function checkExistingUpdateSet(){
+	return new GlideQuery(TABLENAME)
+		.where('u_story', current.sys_id)
+		.count();
+}
+
+createUpdateSet(updateSetCount);
+
+function createUpdateSet(c){
+	ID =	new GlideQuery(TABLENAME)
+		.insert({
+		name : current.number+'_'+current.short_description+'_'+current.assigned_to.user_name+'_'+(c+1),
+		state : 'in progress',
+		u_story : current.sys_id
+	})
+		.get();
+
+	new GlideUpdateSet().set(ID.sys_id);
+}
+
+
+action.setRedirectURL(current);]]></script>
+<show_insert>true</show_insert>
+<show_multiple_update>false</show_multiple_update>
+<show_query>false</show_query>
+<show_update>true</show_update>
+<sys_class_name>sys_ui_action</sys_class_name>
+<sys_created_by>ashish</sys_created_by>
+<sys_created_on>2021-06-07 10:17:46</sys_created_on>
+<sys_domain>global</sys_domain>
+<sys_domain_path>/</sys_domain_path>
+<sys_id>f57603d207243010bc67ff808c1ed00c</sys_id>
+<sys_mod_count>21</sys_mod_count>
+<sys_name>Create Update Set</sys_name>
+<sys_overrides display_value=""/>
+<sys_package display_value="Global" source="global">global</sys_package>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>sys_ui_action_f57603d207243010bc67ff808c1ed00c</sys_update_name>
+<sys_updated_by>ashish</sys_updated_by>
+<sys_updated_on>2021-06-07 11:21:20</sys_updated_on>
+<table>rm_story</table>
+<ui11_compatible>true</ui11_compatible>
+<ui16_compatible>false</ui16_compatible>
+</sys_ui_action>
+</unload>
